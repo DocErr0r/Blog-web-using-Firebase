@@ -4,15 +4,18 @@ import { ToastContainer } from 'react-toastify';
 import Dashboard from './pages/Dashboard/Dashboard';
 import AllBlogs from './pages/AllBlogs/AllBlogs';
 import Blog from './pages/Blog/Blog';
+import { AdminLogin } from './pages/AdminLogin/AdminLogin';
 // import './App.css';
 
 function App() {
     const router = createBrowserRouter(
         createRoutesFromElements([
             <Route path="/" element={<Home />}>
+                {/* <Route index={true} element={}/> */}
                 <Route path="dashboard" element={<Dashboard />} />
                 <Route path="blog" element={<Blog />} />
-                <Route path="all-blog" element={<AllBlogs />} />
+                <Route path="all-blogs" element={<AllBlogs />} />
+                <Route path="admin-login" element={<AdminLogin />} />
             </Route>,
         ]),
     );
