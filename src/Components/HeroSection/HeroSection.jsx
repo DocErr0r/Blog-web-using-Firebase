@@ -28,7 +28,7 @@ function HeroSection() {
                         </p>
                     </div>
                     <div className="flex justify-center mt-10">
-                        <Link className="px-6 bg-gradient-to-r hover:scale-110 from-pink-600 to-blue-800 py-2 border rounded-md text-white ">Get Start</Link>
+                        <Link to={"/admin-login"} className="px-6 bg-gradient-to-r hover:scale-110 from-pink-600 to-blue-800 py-2 border rounded-md text-white ">Get Start</Link>
                     </div>
                 </main>
             </div>
