@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import myContext from '../../contexts/data/myContext';
+import myContext from '../../../contexts/data/myContext';
 
 function Dashboard() {
     const context = useContext(myContext);

@@ -27,7 +27,7 @@ const Navbar = () => {
         <nav className={`border-gray-200 z-50 sticky top-0 ${mode === 'dark' ? 'bg-gray-900 text-white' : 'bg-violet-500 text-black'}`}>
             <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
                 <Link to="/" className="flex items-center space-x-3 rtl:space-x-reverse">
-                    <img src="https://flowbite.com/docs/images/logo.svg" className="h-8" alt="Flowbite Logo" />
+                    <img src="https://cdn-icons-png.flaticon.com/128/3685/3685253.png" className="h-10" alt="BlogNits Logo" />
                     <span className="self-center text-lg md:text-2xl font-semibold whitespace-nowrap">BlogNits</span>
                 </Link>
                 <div className="flex relative items-center md:order-2 space-x-3 md:space-x-0 md:gap-2 rtl:space-x-reverse">
@@ -51,7 +51,7 @@ const Navbar = () => {
                             </li>
                             <li>
                                 <Link to="#" className="block px-4 py-2 text-sm hover:bg-gray-400 " onClick={closeDropdown}>
-                                    Settings
+                                    Profile
                                 </Link>
                             </li>
                             <li>
