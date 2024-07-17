@@ -1,13 +1,16 @@
 import React, { useContext, useState } from 'react';
 import { AiOutlineMenu, AiOutlineUser } from 'react-icons/ai';
 import { MdOutlineDarkMode, MdOutlineLightMode } from 'react-icons/md';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import myContext from '../../contexts/data/myContext';
+import { toast } from 'react-toastify';
 
 const Navbar = () => {
     const { mode, toggleTheme } = useContext(myContext);
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [showMenu, setShowMenu] = useState(false);
+
+    const navigate=useNavigate()
 
     const toggleDropdown = () => {
         setDropdownOpen(!dropdownOpen);
@@ -16,10 +19,11 @@ const Navbar = () => {
     const closeDropdown = () => {
         setDropdownOpen(false);
     };
-
     const handleLogout = () => {
+        localStorage.clear();
+        navigate('/');
+        toast.success('Logged out');
         // Placeholder for logout functionality
-        console.log('Logged out');
         closeDropdown(); // Close dropdown after logout
     };
 
@@ -55,9 +59,9 @@ const Navbar = () => {
                                 </Link>
                             </li>
                             <li>
-                                <Link to="#" className="block px-4 py-2 text-sm hover:bg-gray-400 " onClick={handleLogout}>
+                                <button className="block w-full text-start px-4 py-2 text-sm hover:bg-gray-400 " onClick={handleLogout}>
                                     Sign out
-                                </Link>
+                                </button>
                             </li>
                         </ul>
                     </div>
