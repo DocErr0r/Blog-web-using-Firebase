@@ -6,10 +6,11 @@ import { FireDb, storage } from '../../../firebase/firebaseConfig';
 import { addDoc, collection, Timestamp } from 'firebase/firestore';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { toast } from 'react-toastify';
+import { Editor } from '@tinymce/tinymce-react';
 function CreateBlog() {
     const context = useContext(myContext);
     const { mode } = context;
-    const navigate=useNavigate()
+    const navigate = useNavigate();
 
     const [thumbnail, setthumbnail] = useState();
     const [text, settext] = useState('');
@@ -140,20 +141,21 @@ function CreateBlog() {
 
                 {/* Four Editor  */}
                 {/* editor code  */}
-                <div className="mb-3">
-                    <textarea
-                        className={`shadow-[inset_0_0_4px_rgba(0,0,0,0.6)] w-full rounded-md p-1.5 
-                 outline-none text-black  ${mode === 'dark' ? 'placeholder-black' : 'placeholder-black'}`}
-                        placeholder="Enter Your contents"
-                        value={text}
-                        onChange={(e) => {
-                            settext(e.target.value), setBlogs({ ...blogs, content: e.target.value });
-                        }}
-                        style={{
-                            background: mode === 'dark' ? '#dcdde1' : 'rgb(226, 232, 240)',
-                        }}
-                    />
-                </div>
+                {console.log(import.meta.env)}
+                <Editor
+                    apiKey="dpwldsygifwasjcuinnhlho23keym7tbu8lfo73h381fwjug"
+                    onEditorChange={(newValue, editor) => {
+                        setBlogs({ ...blogs, content: newValue });
+                        settext(editor.getContent({ format: 'text' }));
+                    }}
+                    onInit={(evt, editor) => {
+                        settext(editor.getContent({ format: 'text' }));
+                    }}
+                    init={{
+                        plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage advtemplate mentions tableofcontents footnotes mergetags autocorrect typography inlinecss markdown',
+                        toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+                    }}
+                />
 
                 {/* Five Submit Button  */}
                 <button

@@ -1,13 +1,18 @@
 import React, { useContext } from 'react';
 import myContext from '../../contexts/data/myContext';
 import { useNavigate } from 'react-router';
+import Loader from '../Loader/Loader';
+import { Link } from 'react-router-dom';
 
 function BlogPostCard() {
     const context = useContext(myContext);
-    const { mode, getAllBlog } = context;
+    const { mode, getAllBlog, loading } = context;
 
     const navigate = useNavigate();
 
+    if (loading) {
+        return <Loader />;
+    }
     return (
         <div>
             <section className="text-gray-600 body-font">
@@ -31,7 +36,7 @@ function BlogPostCard() {
                         ${mode === 'dark' ? 'shadow-gray-700' : 'shadow-xl'} 
                         rounded-xl overflow-hidden`}>
                                                 {/* Blog Thumbnail  */}
-                                                <img onClick={() => navigate(`/bloginfo/${id}`)} className=" w-full" src={thumbnail} alt="blog" />
+                                                <img onClick={() => navigate(`/bloginfo/${id}`)} className="w-full" src={thumbnail} alt="blog" />
 
                                                 {/* Top Items  */}
                                                 <div className="p-6">
@@ -59,7 +64,7 @@ function BlogPostCard() {
                                                         style={{
                                                             color: mode === 'dark' ? 'rgb(226, 232, 240)' : ' rgb(30, 41, 59)',
                                                         }}>
-                                                       {item.blogs.content}
+                                                        {item.blogs.content}
                                                     </p>
                                                 </div>
                                             </div>
@@ -76,13 +81,15 @@ function BlogPostCard() {
 
                     {/* See More Button  */}
                     <div className="flex justify-center my-5">
-                        <button
-                            style={{
-                                background: mode === 'dark' ? 'rgb(226, 232, 240)' : 'rgb(30, 41, 59)',
-                                color: mode === 'dark' ? 'rgb(30, 41, 59)' : 'rgb(226, 232, 240)',
-                            }}>
-                            See More
-                        </button>
+                        <Link to={'/all-blogs'}>
+                            <button
+                                style={{
+                                    background: mode === 'dark' ? 'rgb(226, 232, 240)' : 'rgb(30, 41, 59)',
+                                    color: mode === 'dark' ? 'rgb(30, 41, 59)' : 'rgb(226, 232, 240)',
+                                }}>
+                                See more
+                            </button>
+                        </Link>
                     </div>
                 </div>
             </section>

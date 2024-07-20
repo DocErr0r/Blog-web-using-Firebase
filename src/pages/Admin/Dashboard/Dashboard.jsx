@@ -4,7 +4,7 @@ import myContext from '../../../contexts/data/myContext';
 
 function Dashboard() {
     const context = useContext(myContext);
-    const { mode, loading, getAllBlog } = context;
+    const { mode, loading, getAllBlog ,deleteBlogs} = context;
 
     const navigate = useNavigate();
     const logout = () => {
@@ -106,7 +106,7 @@ function Dashboard() {
                                 {getAllBlog.length > 0 ? (
                                     <tbody>
                                         {getAllBlog.map((item, index) => {
-                                            const { thumbnail, date } = item;
+                                            const { thumbnail,id, date } = item;
                                             // console.log(item);
                                             return (
                                                 <tr className=" border-b-2" key={item.id} style={{ background: mode === 'dark' ? 'rgb(30, 41, 59)' : 'white' }}>
@@ -132,8 +132,8 @@ function Dashboard() {
                                                         {date}
                                                     </td>
                                                     {/* Delete Blog  */}
-                                                    <td style={{ color: mode === 'dark' ? 'white' : 'black' }} className="px-6 py-4">
-                                                        <button className=" px-4 py-1 rounded-lg text-white font-bold bg-red-500"></button>
+                                                    <td onClick={() => deleteBlogs(id)} style={{ color: mode === 'dark' ? 'white' : 'black' }} className="px-6 py-4">
+                                                        <button className=" px-4 py-1 rounded-lg text-white font-bold bg-red-500">Delete</button>
                                                     </td>
                                                 </tr>
                                             );

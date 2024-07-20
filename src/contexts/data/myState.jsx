@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import myContext from './myContext';
-import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
+import { collection, deleteDoc, doc, onSnapshot, orderBy, query } from 'firebase/firestore';
 import { FireDb } from '../../firebase/firebaseConfig';
 
 function MyState({ children }) {
     const [mode, setMode] = useState(localStorage.getItem('theme') || 'light');
-    // const [searchkey, setSearchkey] = useState('');
+    const [searchkey, setSearchkey] = useState('');
     const [loading, setloading] = useState(false);
 
     const [getAllBlog, setGetAllBlog] = useState([]);
@@ -42,20 +42,21 @@ function MyState({ children }) {
         }
     }
 
+    // Blog Delete Function 
     const deleteBlogs = async (id) => {
         try {
-            await deleteDoc(doc(fireDb, 'blogPost', id));
-            getAllBlogs();
-            toast.success('Blogs deleted successfully');
+            await deleteDoc(doc(FireDb, "blogPost", id));
+            getAllBlogs()
+            toast.success("Blogs deleted successfully")
         } catch (error) {
-            console.log(error);
+            console.log(error)
         }
-    };
+    }
     useEffect(() => {
         getAllBlogs();
     }, []);
 
-    return <myContext.Provider value={{ mode, toggleTheme, loading, setloading, getAllBlog, deleteBlogs }}>{children}</myContext.Provider>;
+    return <myContext.Provider value={{ mode, toggleTheme, loading, setloading, getAllBlog, deleteBlogs,searchkey,setSearchkey }}>{children}</myContext.Provider>;
 }
 
 export default MyState;

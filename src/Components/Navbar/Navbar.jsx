@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import myContext from '../../contexts/data/myContext';
 import { toast } from 'react-toastify';
 import { auth } from '../../firebase/firebaseConfig';
+import SearchDialog from '../Search/Search';
 
 const Navbar = () => {
     const { mode, toggleTheme } = useContext(myContext);
@@ -39,9 +40,11 @@ const Navbar = () => {
                     <span className="self-center text-lg md:text-2xl font-semibold whitespace-nowrap">BlogNits</span>
                 </Link>
                 <div className="flex relative items-center md:order-2 space-x-3 md:space-x-0 md:gap-2 rtl:space-x-reverse">
-                    <div className="mx-3">
-                        <AiOutlineSearch size={20} color="white" />
-                    </div>
+                    {/* Search Icon */}
+                        <div className='mx-3'>
+                            {/* <AiOutlineSearch size={20} color="white" /> */}
+                            <SearchDialog/>
+                        </div>
                     <button className={`flex text-sm bg-gray-800 border rounded-full md:me-0 ${mode === 'dark' ? 'bg-gray-900 text-white' : 'bg-violet-500 text-black'} `} onClick={toggleTheme}>
                         <span className="sr-only">Open user menu</span>
                         <div className="p-1 md:p-2 text-white text-xl ">{mode === 'dark' ? <MdOutlineDarkMode /> : <MdOutlineLightMode />}</div>

@@ -1,12 +1,16 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import myContext from '../../contexts/data/myContext';
 import { useNavigate } from 'react-router';
 
 function AllBlogs() {
     const context = useContext(myContext);
-    const { mode, getAllBlog } = context;
-
+    const { mode, getAllBlog, loading } = context;
+    
     const navigate = useNavigate();
+    
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
     return (
         <section className="text-gray-600 body-font">
             <div className="container px-5 py-10 mx-auto max-w-7xl ">
