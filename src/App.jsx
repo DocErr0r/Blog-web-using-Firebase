@@ -1,6 +1,6 @@
 import { createBrowserRouter, createRoutesFromElements, Navigate, Outlet, Route, RouterProvider } from 'react-router-dom';
 import Root from './pages/Root/Root';
-import { ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AllBlogs from './pages/AllBlogs/AllBlogs';
 import Blog from './pages/Blog/Blog';
@@ -9,6 +9,9 @@ import './App.css';
 import Dashboard from './pages/Admin/Dashboard/Dashboard';
 import Home from './pages/Home/Home';
 import CreateBlog from './pages/Admin/createBlogs/CreateBlogs';
+import Register from './pages/Auth/Register';
+import Profile from './pages/Auth/Profile';
+import BlogInfo from './pages/BlogInfo/BlogInfo';
 
 const AdminRoutes = () => {
     const admin = JSON.parse(localStorage.getItem('admin'));
@@ -16,6 +19,7 @@ const AdminRoutes = () => {
     if (admin?.user?.email === 'admin@gmail.com') {
         return <Outlet />;
     } else {
+        toast.warn('please login as an Admin');
         return <Navigate to={'/admin-login'} replace />;
     }
 };
@@ -26,10 +30,13 @@ function App() {
             <Route path="/" element={<Root />}>
                 <Route index={true} element={<Home />} />
                 <Route path="blog" element={<Blog />} />
-                <Route path="all-blogs" element={<AllBlogs />} />
+                <Route path="all-blogs" element={<AllBlogs />} />z
+                <Route path="bloginfo/:id" element={<BlogInfo />} />z
                 <Route path="admin-login" element={<AdminLogin />} />
+                <Route path="register" element={<Register />} />
                 <Route path="/" element={<AdminRoutes />}>
                     <Route path="dashboard" element={<Dashboard />} />
+                    <Route path="profile" element={<Profile />} />
                     <Route path="createblog" element={<CreateBlog />} />
                 </Route>
             </Route>,
