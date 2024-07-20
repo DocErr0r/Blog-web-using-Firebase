@@ -1,17 +1,64 @@
 import React, { useState, useContext } from 'react';
 import { BsFillArrowLeftCircleFill } from 'react-icons/bs';
 import myContext from '../../../contexts/data/myContext';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { FireDb, storage } from '../../../firebase/firebaseConfig';
+import { addDoc, collection, Timestamp } from 'firebase/firestore';
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { toast } from 'react-toastify';
 function CreateBlog() {
     const context = useContext(myContext);
     const { mode } = context;
+    const navigate=useNavigate()
 
-    const [blogs, setBlogs] = useState('');
     const [thumbnail, setthumbnail] = useState();
-
     const [text, settext] = useState('');
+    const [blogs, setBlogs] = useState({
+        title: '',
+        category: '',
+        content: '',
+        author: 'Anonymous',
+        time: Timestamp.now(),
+    });
+
     // console.log('Value: ');
     console.log('text: ', text);
+
+    const addPost = async () => {
+        if (blogs.title === '' || blogs.category === '' || blogs.content === '' || blogs.thumbnail === '') {
+            toast.error('Please Fill All Fields');
+        }
+        // console.log(blogs.content)
+        uploadImage();
+    };
+
+    // how to upload image into firebase
+    const uploadImage = () => {
+        if (!thumbnail) return;
+        const imageRef = ref(storage, `blogimage/${thumbnail.name}`);
+        uploadBytes(imageRef, thumbnail).then((snapshot) => {
+            getDownloadURL(snapshot.ref).then((url) => {
+                const productRef = collection(FireDb, 'blogPost');
+                try {
+                    addDoc(productRef, {
+                        blogs,
+                        thumbnail: url,
+                        time: Timestamp.now(),
+                        date: new Date().toLocaleString('en-US', {
+                            month: 'short',
+                            day: '2-digit',
+                            year: 'numeric',
+                        }),
+                    });
+                    navigate('/dashboard');
+                    toast.success('Post Added Successfully');
+                } catch (error) {
+                    toast.error(error);
+                    console.log(error);
+                }
+            });
+        });
+    };
 
     // Create markup function
     function createMarkup(c) {
@@ -70,6 +117,8 @@ function CreateBlog() {
                             background: mode === 'dark' ? '#dcdde1' : 'rgb(226, 232, 240)',
                         }}
                         name="title"
+                        onChange={(e) => setBlogs({ ...blogs, title: e.target.value })}
+                        value={blogs.title}
                     />
                 </div>
 
@@ -84,18 +133,22 @@ function CreateBlog() {
                             background: mode === 'dark' ? '#dcdde1' : 'rgb(226, 232, 240)',
                         }}
                         name="category"
+                        onChange={(e) => setBlogs({ ...blogs, category: e.target.value })}
+                        value={blogs.category}
                     />
                 </div>
 
                 {/* Four Editor  */}
                 {/* editor code  */}
                 <div className="mb-3">
-                    <input type="textbox"
+                    <textarea
                         className={`shadow-[inset_0_0_4px_rgba(0,0,0,0.6)] w-full rounded-md p-1.5 
                  outline-none text-black  ${mode === 'dark' ? 'placeholder-black' : 'placeholder-black'}`}
                         placeholder="Enter Your contents"
                         value={text}
-                        onChange={(e)=>{settext(e.target.value),setBlogs({content:e.target.value})}}
+                        onChange={(e) => {
+                            settext(e.target.value), setBlogs({ ...blogs, content: e.target.value });
+                        }}
                         style={{
                             background: mode === 'dark' ? '#dcdde1' : 'rgb(226, 232, 240)',
                         }}
@@ -105,6 +158,7 @@ function CreateBlog() {
                 {/* Five Submit Button  */}
                 <button
                     className=" w-full mt-5"
+                    onClick={addPost}
                     style={{
                         background: mode === 'dark' ? 'rgb(226, 232, 240)' : 'rgb(30, 41, 59)',
                         color: mode === 'dark' ? 'rgb(30, 41, 59)' : 'rgb(226, 232, 240)',
