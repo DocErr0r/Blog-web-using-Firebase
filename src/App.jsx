@@ -12,6 +12,7 @@ import CreateBlog from './pages/Admin/createBlogs/CreateBlogs';
 import Register from './pages/Auth/Register';
 import Profile from './pages/Auth/Profile';
 import BlogInfo from './pages/BlogInfo/BlogInfo';
+import NotFoundPage from './pages/Nopage/NoPage';
 
 const AdminRoutes = () => {
     const admin = JSON.parse(localStorage.getItem('admin'));
@@ -39,6 +40,7 @@ function App() {
                     <Route path="profile" element={<Profile />} />
                     <Route path="createblog" element={<CreateBlog />} />
                 </Route>
+                <Route path='*' element={<NotFoundPage />} />
             </Route>,
         ]),
     );
