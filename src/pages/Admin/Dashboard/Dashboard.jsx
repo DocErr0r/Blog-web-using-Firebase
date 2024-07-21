@@ -1,14 +1,17 @@
 import React, { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import myContext from '../../../contexts/data/myContext';
+import { auth } from '../../../firebase/firebaseConfig';
+import { signOut } from 'firebase/auth';
 
 function Dashboard() {
     const context = useContext(myContext);
     const { mode, loading, getAllBlog ,deleteBlogs} = context;
 
     const navigate = useNavigate();
-    const logout = () => {
+    const logout = async() => {
         localStorage.clear();
+        await signOut(auth);
         navigate('/');
     };
 
@@ -22,14 +25,14 @@ function Dashboard() {
                     </div>
                     <div className="right">
                         <h1 className="text-center font-bold text-2xl mb-2" style={{ color: mode === 'dark' ? 'white' : 'black' }}>
-                            Kamal Nayan Upadhyay
+                            Admin
                         </h1>
 
                         <h2 style={{ color: mode === 'dark' ? 'white' : 'black' }} className="font-semibold">
-                            Software Developer
+                            Content creater
                         </h2>
                         <h2 style={{ color: mode === 'dark' ? 'white' : 'black' }} className="font-semibold">
-                            knupadhyay784@gmail.com
+                           admin@gmail.com
                         </h2>
                         <h2 style={{ color: mode === 'dark' ? 'white' : 'black' }} className="font-semibold">
                             <span>Total Blog : </span> {getAllBlog.length}

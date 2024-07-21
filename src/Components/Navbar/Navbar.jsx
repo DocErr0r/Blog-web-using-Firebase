@@ -6,6 +6,7 @@ import myContext from '../../contexts/data/myContext';
 import { toast } from 'react-toastify';
 import { auth } from '../../firebase/firebaseConfig';
 import SearchDialog from '../Search/Search';
+import { signOut } from 'firebase/auth';
 
 const Navbar = () => {
     const { mode, toggleTheme } = useContext(myContext);
@@ -13,7 +14,7 @@ const Navbar = () => {
     const [showMenu, setShowMenu] = useState(false);
 
     const user = auth.currentUser;
-    // console.log(user?.photoURL);
+    // console.log(user);
 
     const navigate = useNavigate();
 
@@ -24,8 +25,9 @@ const Navbar = () => {
     const closeDropdown = () => {
         setDropdownOpen(false);
     };
-    const handleLogout = () => {
+    const handleLogout = async() => {
         localStorage.clear();
+        await signOut(auth);
         navigate('/');
         toast.success('Logged out');
         // Placeholder for logout functionality
