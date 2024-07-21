@@ -11,12 +11,14 @@ function CreateBlog() {
     const context = useContext(myContext);
     const { mode } = context;
     const navigate = useNavigate();
+    const key = import.meta.env.VITE_EDITER_KEY;
 
     const [thumbnail, setthumbnail] = useState();
     const [text, settext] = useState('');
     const [blogs, setBlogs] = useState({
         title: '',
         category: '',
+        summary: '',
         content: '',
         author: 'Anonymous',
         time: Timestamp.now(),
@@ -138,12 +140,26 @@ function CreateBlog() {
                         value={blogs.category}
                     />
                 </div>
+                {/* summary */}
+                <div className="mb-3">
+                    <textarea
+                        className={`shadow-[inset_0_0_4px_rgba(0,0,0,0.6)] w-full rounded-md p-1.5 
+                 outline-none text-black  ${mode === 'dark' ? 'placeholder-black' : 'placeholder-black'}`}
+                        placeholder="Enter Your summary"
+                        style={{
+                            background: mode === 'dark' ? '#dcdde1' : 'rgb(226, 232, 240)',
+                        }}
+                        name="category"
+                        onChange={(e) => setBlogs({ ...blogs, summary: e.target.value })}
+                        value={blogs.summary}
+                    />
+                </div>
 
                 {/* Four Editor  */}
                 {/* editor code  */}
-                {console.log(import.meta.env)}
+                {/* {console.log(key)} */}
                 <Editor
-                    apiKey="dpwldsygifwasjcuinnhlho23keym7tbu8lfo73h381fwjug"
+                    apiKey={key}
                     onEditorChange={(newValue, editor) => {
                         setBlogs({ ...blogs, content: newValue });
                         settext(editor.getContent({ format: 'text' }));
@@ -159,10 +175,9 @@ function CreateBlog() {
 
                 {/* Five Submit Button  */}
                 <button
-                    className=" w-full mt-5"
+                    className=" w-full mt-5 py-2 rounded-xl bg-blue-600" 
                     onClick={addPost}
                     style={{
-                        background: mode === 'dark' ? 'rgb(226, 232, 240)' : 'rgb(30, 41, 59)',
                         color: mode === 'dark' ? 'rgb(30, 41, 59)' : 'rgb(226, 232, 240)',
                     }}>
                     Send
@@ -173,7 +188,7 @@ function CreateBlog() {
                     <h1 className=" text-center mb-3 text-2xl">Preview</h1>
                     <div className="content">
                         <div
-                            className={`[&> h1]:text-[32px] [&>h1]:font-bold  [&>h1]:mb-2.5
+                            className={`[&>h1]:text-[32px] [&>h1]:font-bold  [&>h1]:mb-2.5
                         ${mode === 'dark' ? '[&>h1]:text-[#ff4d4d]' : '[&>h1]:text-black'}
 
                         [&>h2]:text-[24px] [&>h2]:font-bold [&>h2]:mb-2.5
