@@ -25,7 +25,7 @@ function CreateBlog() {
     });
 
     // console.log('Value: ');
-    console.log('text: ', text);
+    // console.log('text: ', text);
 
     const addPost = async () => {
         if (blogs.title === '' || blogs.category === '' || blogs.content === '' || blogs.thumbnail === '') {

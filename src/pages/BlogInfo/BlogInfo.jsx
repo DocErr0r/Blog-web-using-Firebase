@@ -23,7 +23,7 @@ function BlogInfo() {
             if (productTemp.exists()) {
                 setGetBlogs(productTemp.data());
             } else {
-                console.log('Document does not exist');
+                toast.error('Document does not exist');
             }
             setloading(false);
         } catch (error) {
@@ -80,7 +80,7 @@ function BlogInfo() {
                     productsArray.push({ ...doc.data(), id: doc.id });
                 });
                 setAllComment(productsArray);
-                console.log(productsArray);
+                // console.log(productsArray);
             });
             return () => data;
         } catch (error) {

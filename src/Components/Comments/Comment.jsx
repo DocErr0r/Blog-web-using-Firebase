@@ -5,7 +5,7 @@ function Comment({ addComment, commentText, setcommentText, allComment, fullName
     const context = useContext(myContext);
     const { mode } = context;
 
-    console.log(allComment);
+    // console.log(allComment);
     return (
         <section className=" py-8 lg:py-16">
             <div className="max-w-2xl mx-auto px-4">
