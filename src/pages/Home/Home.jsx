@@ -13,16 +13,20 @@ export default function Home() {
         return <Loader />;
     }
 
+    // Limit blogs to first 3
+    const blogsToShow = getAllBlog.slice(0, 3);
+
     return (
         <>
             <HeroSection />
             <div className="container mx-auto min-h-[100vh] flex flex-wrap">
                 <section className="text-gray-600 body-font">
                     <div className="container px-5 py-10 mx-auto max-w-7xl">
-                        <div className="flex flex-wrap justify-center -m-4 mb-5">{getAllBlog.length > 0 ? getAllBlog.map((blog, index) => <Card key={index} navigate={navigate} blog={blog} />) : <h1 className="text-xl font-bold">No blogs found</h1>}</div>
+                        <div className="flex flex-wrap justify-center -m-4 mb-5">{blogsToShow.length > 0 ? blogsToShow.map((blog, index) => <Card key={index} navigate={navigate} blog={blog} />) : <h1 className="text-xl font-bold">No blogs found</h1>}</div>
                         <div className="flex justify-center my-5">
                             <Link to={'/all-blogs'}>
                                 <button
+                                className='px-4 py-2 rounded-lg'
                                     style={{
                                         background: mode === 'dark' ? 'rgb(226, 232, 240)' : 'rgb(30, 41, 59)',
                                         color: mode === 'dark' ? 'rgb(30, 41, 59)' : 'rgb(226, 232, 240)',
